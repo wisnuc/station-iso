@@ -46,6 +46,18 @@ Example:
 sudo node index.js ubuntu-16.04.3-server-amd64.iso -v 0.9.1
 ```
 
+# Known Issues
+
+`wget` download is not stable. Sometimes the tarball file is incomplete. Be sure to check `.tar.gz` before using the disc. They are located at `/wisnuc` directory on disc.
+
+# Inside
+
+Wisnuc station requires very few packages to work: `avahi-daemon avahi-utils btrfs-tools imagemagick ffmpeg samba udisks2`.
+
+`nodejs` version is 8.4.0. It is installed from official tarball and extracted into `/usr/bin`. If you are going to modify this location, be sure to update all systemd unit files located in `assets` directory. There are 2 service file and 1 timer file to be modified.
+
+`docker` is not included in this version.
+
 # Help
 
 File a issue for question, feature request, or bug report.

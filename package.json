@@ -4,6 +4,7 @@
   "description": "for station installation iso image",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/wisnuc/station-iso/issues"
   },
-  "homepage": "https://github.com/wisnuc/station-iso#readme"
+  "homepage": "https://github.com/wisnuc/station-iso#readme",
+  "devDependencies": {
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.1",
+    "superagent": "^3.6.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0"
+  }
 }

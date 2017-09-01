@@ -67,6 +67,8 @@ Wisnuc station requires very few packages to work: `avahi-daemon avahi-utils btr
 
 # Trouble-shooting
 
+## fdisk
+
 To check if an iso is a flat iso9660, a hybrid, with or without UEFI support, use `fdisk` command.
 
 ```
@@ -92,6 +94,10 @@ Device                                                Boot Start     End Sectors
 ubuntu-16.04.3-server-amd64-wisnuc-station-0.8.7.iso1 *        0 1763327 1763328  861M  0 Empty
 ubuntu-16.04.3-server-amd64-wisnuc-station-0.8.7.iso2       7880   12551    4672  2.3M ef EFI (FAT-12/16/32)
 ```
+
+## Startup Disk Creator (Ubuntu)
+
+If Ubuntu `Startup Disk Creator` cannot use the generated iso to flash usb drive, it means the iso is not bootable, probably for there is no mbr record.
 
 # Help
 

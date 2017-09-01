@@ -143,7 +143,37 @@ spawnCommandAsync([
   async () => (log('write cd-image/.release.json'), fs.writeFileAsync('cd-image/.release.json', JSON.stringify(release, null, '  '))),
   () => `tar czf cd-image/wisnuc/${repacked()} -C tmp .`,
   async () => (log('append ubuntu-server.seed'), log(seed()), fs.writeFileAsync('cd-image/preseed/ubuntu-server.seed', seed(), { flag: 'a' })),
-  () => `mkisofs -r -V "${volumeId()}" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ${output()} cd-image`,
+
+  /** flat iso9660
+  () => `mkisofs -r \
+    -V ${volumeId()} \
+    -cache-inodes -J -l \
+    -b isolinux/isolinux.bin \
+    -c isolinux/boot.cat \
+    -no-emul-boot \
+    -boot-load-size 4 \
+    -boot-info-table \
+    -o ${output()} cd-image`,
+  */
+
+  /** hybrid with UEFI support
+    1. --isohybrid-mbr requires path relative to working directory, not cd-image
+    2. -no-emul-boot must be provided to -eltorito-alt-boot, otherwise xorriso complains with 2.3M efi.img size
+  */ 
+  () => `dd if=${iso} bs=512 count=1 of=cd-image/isolinux/isohdpfx.bin`,
+  () => `xorriso -as mkisofs -r \
+    -V ${volumeId()} \
+    -o ${output()} \
+    -isohybrid-mbr cd-image/isolinux/isohdpfx.bin \
+    -cache-inodes -J -l \
+    -c isolinux/boot.cat \
+    -b isolinux/isolinux.bin \
+      -no-emul-boot -boot-load-size 4 -boot-info-table \
+    -eltorito-alt-boot \
+    -e boot/grub/efi.img \
+      -no-emul-boot -isohybrid-gpt-basdat \
+    cd-image`,
+
 ]).then(x => x, e => console.log(e))
 
 

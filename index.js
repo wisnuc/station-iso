@@ -55,7 +55,9 @@ let release
 const addr = 'https://raw.githubusercontent.com'
 const updateUrl = `${addr}/wisnuc/appifi-bootstrap-update/release/appifi-bootstrap-update.packed.js`
 const bootstrapUrl = `${addr}/wisnuc/appifi-bootstrap/release/appifi-bootstrap.js.sha1`
-const nodeUrl = 'https://nodejs.org/dist/v8.4.0/node-v8.4.0-linux-x64.tar.xz'
+// const nodeUrl = 'https://nodejs.org/dist/v8.4.0/node-v8.4.0-linux-x64.tar.xz'
+const nodeUrl = 'https://nodejs.org/dist/v8.6.0/node-v8.6.0-linux-x64.tar.xz'
+const kdeb = 'linux-image-4.3.3.001+_001_amd64.deb'
 
 // mandatory arg
 const iso = process.argv.find(arg => arg.endsWith('.iso'))
@@ -134,6 +136,8 @@ spawnCommandAsync([
   'cp assets/appifi-bootstrap-update.service cd-image/wisnuc',
   'cp assets/appifi-bootstrap-update.timer cd-image/wisnuc',
   'cp assets/appifi-bootstrap.service cd-image/wisnuc',
+  'cp assets/install_ws215i.sh cd-image/wisnuc',
+  `cp assets/${kdeb}.orig cd-image/wisnuc/${kdeb}`,
   `wget -O cd-image/wisnuc/${nodeUrl.split('/').pop()} ${nodeUrl}`,
   `wget -O cd-image/wisnuc/appifi-bootstrap-update.packed.js ${updateUrl}`,
   `wget -O cd-image/wisnuc/appifi-bootstrap.js.sha1 ${bootstrapUrl}`,

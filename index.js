@@ -104,7 +104,7 @@ const repacked = () => `appifi-${release.tag_name}-${release.id}-${release.targe
 // append to ubuntu-server.seed
 const seed = () => ` 
 # Individual additional packages to install
-d-i pkgsel/include string avahi-daemon avahi-utils btrfs-tools imagemagick ffmpeg samba udisks2
+d-i pkgsel/include string avahi-daemon avahi-utils btrfs-tools imagemagick ffmpeg samba udisks2 libimage-exiftool-perl
 # Install wisnuc files
 d-i preseed/late_command string \\
 mkdir -p /target/wisnuc/appifi-tarballs; \\

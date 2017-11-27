@@ -1,0 +1,25 @@
+1. re-insert cdrom in virtualbox
+2. mount /dev/cdrom /cdrom
+3. cp /cdrom/wisnuc/linux-image-4.3.3.001\+_001_amd63.deb /target
+4. cp /cdrom/wisnuc/install_ws215i.sh /target
+5. chroot
+   . /lib/chroot_setup.sh
+   chroot_setup
+   chroot /target /bin/bash
+6. chmod a+x install_ws215i.sh
+7. rm -rf install_ws215i.sh
+7. exit
+   chroot_cleanup
+8. exit to GUI, reboot, and pause and shutdown the vm when first screen appears.
+
+
+9. virtualbox manager cloneHD
+   vboxmanage clonehd ws215i-image.vdi ws215i-image.img --format RAW
+
+10. mkdir mnt
+    sudo mount -o ro,loop,offset=1048576 ws215i-image.img mnt
+
+11. cd mnt
+    tar cvzf ../barcelona.tar.gz .
+
+

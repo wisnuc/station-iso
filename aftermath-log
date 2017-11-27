@@ -1,0 +1,63 @@
+
+mount -t iso9660 -o ro /dev/sr0 /cdromcd 
+
+1. install a iso onto virtualbox disk (vdi)
+2. at the last step, exit to shell
+3. raw
+   . /lib/chroot_setup.sh
+   chroot_setup
+   chroot /target /bin/bash
+
+should install old kernel before removing
+
+apt remove linux-image-4.4
+
+	install 4.3.3 kernel
+	remove old kernel and header package
+	hold generic kernel and header
+	update-initramfs -u -k all
+	// apt-mark hold package.name
+	fix 2 links: ??? not required
+
+
+(build -> /usr/src/linux-headers-4.10.0-28-generic)
+
+/lib/modules/4.3.3.001+/build
+/lib/modules/4.3.3.001+/source
+		
+	create 3 links:
+		1. bzImage -> vmlinuz-4.3.3.001+
+ln -s vmlinuz-4.3.3.001+
+		2. ramdisk -> initrd.img-4.3.3.001+
+		3. cmdline
+
+[Match]
+Name=en*
+[Network]
+DHCP=ipv4
+
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved
+systemctl enable avahi-daemon
+
+apt-get clean
+apt-get autoclean
+
+console=tty0 console=ttyS0,115200 root=/dev/mmcblk0p1 rootwait
+
+/etc/fstab
+/dev/mmcblk0p1 / ext4 errors=remount-ro 0 1
+		
+   chroot_cleanup
+4. finalize, shutdown the system (pause and poweroff)
+5. VBoxManage clonehd --format RAW test.vdi test.img
+6. sudo mount -t ext4 -o loop,offset=$((2048 * 512)),rw ./test.img mnt
+
+
+mount -t proc 		proc 	mnt/proc
+mount -t devtmpfs	none    mnt/dev
+mount -t sysfs		none	mnt/sys
+mount -t devpts 	none 	mnt/dev/pts
+
+
+

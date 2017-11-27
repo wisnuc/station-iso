@@ -1,0 +1,6 @@
+[Unit]
+Description=Appifi Bootstrap Update
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /wisnuc/bootstrap/appifi-bootstrap-update.packed.js
